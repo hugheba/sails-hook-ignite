@@ -1,0 +1,10 @@
+{
+  "name": "sails-hook-graalvm-apache-ignite",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "Integrate Apache Ignite into your Sails app running under GraalVM",
+  "main": "index.js",
+  "sails": {
+    "isHook": true,
+    "hookName": "ignition"
+  }
+}
