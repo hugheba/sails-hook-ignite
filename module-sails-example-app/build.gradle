@@ -1,0 +1,21 @@
+plugins {
+  id "com.moowork.node" version "1.2.0"
+  id "com.moowork.grunt" version "1.2.0"
+  id "com.moowork.gulp" version "1.2.0"
+  id "de.gesellix.docker" version "2018-01-30T22-14-21"
+}
+
+configurations { sampleApp }
+
+dependencies {
+  sampleApp proejct(':module-java-bridge', configuration: 'javaBridge')
+}
+
+task runExampleApp(type: NodeTask, dependsOn: configrations.sampleApp.shadowJar) {
+  script = file('app.js')
+  args = [
+    '--jvm',
+    '--polyglot',
+    '--jvm.cp="../module-java-bridge/build/libs/sails-hook-ignite.jar"'
+  ]
+}
