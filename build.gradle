@@ -1,20 +1,9 @@
 plugins {
     id 'groovy'
-    id "com.github.johnrengelman.shadow" version "2.0.4"
-    id "de.gesellix.docker" version "2018-01-30T22-14-21"
+//    id "com.zoltu.git-versioning" version "3.0.3"
 }
 
 group 'com.hugheba.sails.hook'
-version '1.0.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies() {
-    compile "org.codehaus.groovy:groovy-all:2.4.15"
-    compile "org.apache.ignite:ignite-core:2.6.0"
-}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.10.1'
