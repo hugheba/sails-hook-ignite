@@ -1,0 +1,21 @@
+import de.gesellix.gradle.docker.tasks.*
+
+plugins {
+    id "de.gesellix.docker" version "2018-01-30T22-14-21"
+}
+
+task build(type: DockerBuildTask) {
+    dependsOn ':module-sails-example-app:packageUp', ':module-java-bridge:shadowJar'
+
+    doFirst {
+        ant.copy file: "${project.parent.project('module-java-bridge').projectDir}/build/libs/sails-hook-ignite.jar", toDir: projectDir
+        ant.copy file: "${project.parent.project('module-sails-example-app').projectDir}/build/example-app.zip", toDir: projectDir
+    }
+
+    doLast {
+        println "Created image ${imageName}"
+    }
+
+    imageName = "sails-ignite-example:${project.version}"
+    buildContextDirectory = file('./')
+}

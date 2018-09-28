@@ -6,9 +6,7 @@ A sails hook to integrate your Sails app into an Apache Ignite grid.
 
 ## Version Info
 
-| sails-hook-version Version | Ignite Version | GSON version |
-|---|---|---|
-| 1.0.0 | 2.6.0 | 2.8.5 |
+
 
 ## Quick Start
 

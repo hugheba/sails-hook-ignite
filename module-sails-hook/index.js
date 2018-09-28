@@ -1,52 +1,4 @@
-
-class IgniteBridge {
-
-    constructor(config) {
-        this.config = config;
-        this.caches = {};
-        this.connect();
-        this.initCaches();
-    }
-
-    connect() {
-        const IB = Java.type('com.hugheba.sails.hook.ignite.IgniteBridge');
-        this.javaBridge = new IB(JSON.stringify(this.config));
-    }
-
-    initCaches() {
-        var me = this;
-        try {
-            var configCaches = this.config.caches;
-            configCaches.forEach( function(cache) {
-                if (cache.name) {
-                    me.caches[cache.name] = me.javaBridge.getOrCreateCache(cache.name);
-                }
-            });
-        } catch(e) {
-            console.error('Unable to load Ignite caches!', e);
-        }
-    }
-
-    getIgnite() {
-        return this.javaBridge.ignite;
-    }
-
-    getCaches() {
-        return this.caches;
-    }
-
-    subscribe(topic, callback) {
-        this.javaBridge.subscribe(topic, callback);
-    }
-
-    unsubscribe(topic, callback) {
-        this.javaBridge.unsubscribe(topic, callback);
-    }
-
-    broadcast(topic, message) {
-        this.javaBridge.broadcast(topic, JSON.stringify(message));
-    }
-}
+var IgniteBridge = require('hugheba-graaljs-ignite');
 
 module.exports = function ignite (sails) {
 
@@ -56,16 +8,11 @@ module.exports = function ignite (sails) {
         defaults: {
             ignite: {
                 connection: {
-                    ipFinder: 'TcpDiscoveryMulticastIpFinder', // See https://apacheignite.readme.io/docs/tcpip-discovery
+                    ipFinder: 'TcpDiscoveryMulticastIpFinder',
                     addresses: ['127.0.0.1:47500..47509'],
-                    multicastGroup: '228.10.10.157', // Used only for discovery: 'TcpDiscoveryMulticastIpFinder'
+                    multicastGroup: '228.10.10.157',
                 },
-                caches: [
-                    {
-                        name: 'default',
-                        cacheMode: 'PARTITIONED' // Options are: LOCAL, PARTITIONED or REPLICATED, see https://apacheignite.readme.io/docs/cache-modes
-                    },
-                ]
+                caches: {'default' : {cacheMode: 'PARTITIONED' }},
             }
         },
         initialize: function(cb) {
@@ -76,22 +23,10 @@ module.exports = function ignite (sails) {
             return cb();
         },
         getIgnite: function () { return igniteBridge.getIgnite(); },
-        getCaches: function () { return igniteBridge.getCaches(); },
-        subscribe: function (topic, callback) {
-            if (igniteBridge && topic && callback) {
-                igniteBridge.subscribe(`${topic}`, callback);
-            }
-        },
-        unsubscribe: function (topic, callback) {
-            if (igniteBridge && topic && callback) {
-                igniteBridge.unsubscribe(`${topic}`, callback);
-            }
-        },
-        broadcast: function (topic, message) {
-            if (igniteBridge && topic && message) {
-                igniteBridge.broadcast(`${topic}`, message);
-            }
-        }
+        getEventBus: function () { return igniteBridge.getEventBus() },
+        getCache: function (cacheName) { return igniteBridge.getCache(cacheName); },
+        getRecord: function (recordName) { return igniteBridge.getRecord(recordName); },
+        getCounter: function (counterName) { return igniteBridge.getCounter(counterName); },
     }
 
 };

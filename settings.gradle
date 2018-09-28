@@ -1,5 +1,5 @@
 rootProject.name = 'sails-hook-ignite'
 
 include 'module-sails-hook'
-include 'module-java-bridge'
 include 'module-sails-example-app'
+include 'module-sails-docker'
