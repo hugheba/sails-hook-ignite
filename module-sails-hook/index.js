@@ -6,7 +6,7 @@ module.exports = function ignite (sails) {
 
     return {
         defaults: {
-            ignite: {
+            __configKey__: {
                 connection: {
                     ipFinder: 'TcpDiscoveryMulticastIpFinder',
                     addresses: ['127.0.0.1:47500..47509'],
@@ -22,11 +22,9 @@ module.exports = function ignite (sails) {
             igniteBridge = new IgniteBridge(config);
             return cb();
         },
-        getIgnite: function () { return igniteBridge.getIgnite(); },
-        getEventBus: function () { return igniteBridge.getEventBus() },
-        getCache: function (cacheName) { return igniteBridge.getCache(cacheName); },
-        getRecord: function (recordName) { return igniteBridge.getRecord(recordName); },
-        getCounter: function (counterName) { return igniteBridge.getCounter(counterName); },
+        get: function() {
+            return igniteBridge;
+        }
     }
 
 };

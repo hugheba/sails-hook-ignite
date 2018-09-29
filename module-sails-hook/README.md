@@ -1,6 +1,6 @@
 # sails-hook-ignite
 
-A sails hook to integrate your Sails app into an Apache Ignite grid.
+A sails hook to integrate your Sails app into an Apache Ignite grid with the [hugheba-graaljs-ignite](https://github.com/hugheba/graaljs-ignite) module.
 
 > This hook only works for Sails apps running under GraalVM/GraalJS implementation of node.
 
@@ -25,6 +25,12 @@ Create a new config file in your project `config/ignite.js` with the contents:
 
 Modify the configuration properties in accordance to the underlying 
 [hugheba-graaljs-ignite](https://github.com/hugheba/graaljs-ignite) module.
+
+### Usage
+
+Access the configured `IgniteBridge`.
+
+    var igniteBridge = sails.hooks.ignite.get();
 
 ## Project
 
