@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-ignite",
-  "version": "1.0.0-RC1",
+  "version": "1.0.0-RC2",
   "description": "Integrate Apache Ignite into your Sails app running under GraalVM",
   "main": "index.js",
   "scripts": {},
